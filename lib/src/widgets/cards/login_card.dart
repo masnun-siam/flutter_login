@@ -23,6 +23,7 @@ class _LoginCard extends StatefulWidget {
     this.hideProvidersTitle = false,
     this.introWidget,
     required this.initialIsoCode,
+    required this.hidePassword,
   });
 
   final AnimationController loadingController;
@@ -42,6 +43,7 @@ class _LoginCard extends StatefulWidget {
   final Future<bool> Function() requireSignUpConfirmation;
   final Widget? introWidget;
   final String? initialIsoCode;
+  final bool hidePassword;
 
   @override
   _LoginCardState createState() => _LoginCardState();
@@ -717,8 +719,10 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
                   if (widget.introWidget != null) widget.introWidget!,
                   _buildUserField(textFieldWidth, messages, auth),
                   const SizedBox(height: 20),
-                  _buildPasswordField(textFieldWidth, messages, auth),
-                  const SizedBox(height: 10),
+                  if (!widget.hidePassword) ...[
+                    _buildPasswordField(textFieldWidth, messages, auth),
+                    const SizedBox(height: 10),
+                  ],
                 ],
               ),
             ),
